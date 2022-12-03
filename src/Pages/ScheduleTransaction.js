@@ -86,7 +86,6 @@ const ScheduleTransaction = () => {
   };
   return (
     <div>
-      <NavBar1 />
       <Container style={{ paddingTop: "1rem" }}>
         <Form onSubmit={handleTrxSubmit}>
           <Row>
