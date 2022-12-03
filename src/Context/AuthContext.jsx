@@ -20,22 +20,22 @@ export const UserProvider = ({ children }) => {
   }
 
   const fetchUser = async () => {
-    const { data: response } = await axios.get("https://localhost:4000");
+    const { data: response } = await axios.get("http://localhost:4001/");
 
-    // If data exists, update User state, else Error
-    if (response.data) {
-      setUser({
-        data: null,
-        loading: false,
-        error: null,
-      });
-    } else if (response.data && response.data.errors.length) {
-      setUser({
-        data: null,
-        loading: false,
-        error: response.errors,
-      });
-    }
+    // // If data exists, update User state, else Error
+    // if (response.data) {
+    //   setUser({
+    //     data: null,
+    //     loading: false,
+    //     error: null,
+    //   });
+    // } else if (response.data && response.data.errors.length) {
+    //   setUser({
+    //     data: null,
+    //     loading: false,
+    //     error: response.errors,
+    //   });
+    // }
     console.log("fetch success");
   };
 
