@@ -19,27 +19,21 @@ export const UserProvider = ({ children }) => {
     axios.defaults.headers.common["authorization"] = `Bearer ${token}`;
   }
 
-  // Function to fetch response from Middleware (If pass we'll get a response to update state)
   const fetchUser = async () => {
-    const { data: response } = await axios.get(
-      "https://tradewise-demo.herokuapp.com/auth/me"
+    console.log(user);
+    const { data: response } = await axios.post(
+      "http://localhost:4001/v1/getUserByUsername",
+      {
+        Username: "ExecutiveDBS",
+      }
     );
-
+    console.log(response);
     // If data exists, update User state, else Error
-    if (response.data && response.data.user) {
+    if (response.data) {
       setUser({
-        data: {
-          id: response.data.user.id,
-          email: response.data.user.email,
-        },
+        data: response.data,
         loading: false,
         error: null,
-      });
-    } else if (response.data && response.data.errors.length) {
-      setUser({
-        data: null,
-        loading: false,
-        error: response.errors[0].msg,
       });
     }
   };
