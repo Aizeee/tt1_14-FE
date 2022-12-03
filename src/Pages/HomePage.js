@@ -60,8 +60,16 @@ const Home = () => {
 
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    navigate("/about")
+  const handleClick = (accountId) => {
+    // change navigation link to transaction details page
+    navigate("/about", { state: { accountId: accountId } })
+
+    // how to use it on the other page
+    /*
+    import { useLocation } from "react-router-dom";
+    const location = useLocation();
+    console.log(location.state.accountId)
+    */
   }
   const [accountData, setAccountData] = useState([])
 
@@ -86,15 +94,13 @@ const Home = () => {
         <tbody>
           {accountData.map((account, index) => {
             return (
-              <tr onClick={() => handleClick()}>
+              <tr onClick={() => handleClick(account.AccountID)}>
                 {Object.values(account).map((accountDetails) => {
                   return <td>{accountDetails}</td>
                 })}
               </tr>
             );
           })}
-
-
         </tbody>
       </Table>
     </div>
