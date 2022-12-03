@@ -37,12 +37,32 @@ const SignupForm = () => {
     if (response.error) {
       setError(response.error);
     }
+
+    // Set User Auth State on successful login/signup
+    setUser({
+      data: {
+        token: "token",
+      },
+      loading: false,
+      error: null,
+    });
+
+    // Storing JWT in the browser Local Storage
+    localStorage.setItem("token", response.data.token);
+    // Update axios header with the token, so user is authenticated across all protected routes
+    axios.defaults.headers.common[
+      "authorization"
+    ] = `Bearer ${response.data.token}`;
+
+    // Navigate user on login/signup success
+    navigate("/");
   };
 
   return (
     <>
       <Container style={{ paddingTop: "1rem" }}>
         <h1>DIGI Signup</h1>
+        {error && <div>{error}</div>}
         <Form onSubmit={handleSubmit}>
           <Row>
             <Col sm></Col>
