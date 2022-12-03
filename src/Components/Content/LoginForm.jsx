@@ -21,7 +21,7 @@ const LoginForm = () => {
     e.preventDefault();
 
     try {
-      const data = await axios.post("http://localhost:4001/v1/login", {
+      const data = await axios.post("http://13.112.160.104:4001/v1/login", {
         Username: username,
         Password: password,
       });
