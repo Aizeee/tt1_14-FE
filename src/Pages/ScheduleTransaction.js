@@ -6,6 +6,7 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import TextField from '@mui/material/TextField';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import axios from "axios";
 
 const ScheduleTransaction = () => {
   const {setDebug, clearScheduler, createScheduler, saturday, sunday} = require('datetime-scheduler');
@@ -35,11 +36,13 @@ const ScheduleTransaction = () => {
   // createScheduler(name, configuration, options);   
 
   const [inputs, setInputs] = useState({});
+  const [error, setError] = useState("");
   const [time, setTime] = useState(
-    dayjs('2014-08-18T21:11:54'));
+    dayjs('2012-08-18T21:11:54'));
+  let response;
 
   const handleChange = (event) => {
-    console.log("event: ", event)
+    // console.log("event: ", event)
     const name = event.target.name;
     const value = event.target.value;
     // console.log("name", name)
@@ -53,14 +56,36 @@ const ScheduleTransaction = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(inputs);
+    handleTrxSubmit(event);
   }
 
   const handleDateChange = (newValue) => {
     // setTime(newValue);
     // console.log("this is date value", value.$d)
     console.log(dayjs(time.$d).format('YYYY-MM-DDTHH:mm:ssZ[Z]'))
-    const name = 'time';
+    const name = 'Date';
     setInputs(values => ({...values, [name]: dayjs(time.$d).format('YYYY-MM-DDTHH:mm:ssZ[Z]')}))
+  };
+
+  
+  const handleTrxSubmit = async (e) => {
+    e.preventDefault();
+
+    console.log("HANDLE TRX SUBMIT ")
+    try {
+      const { data: scheduleTransactionData } = await axios.post(
+        "http://localhost:4001/v1/addTransactions",
+        {inputs}
+      );
+      response = scheduleTransactionData;
+    } catch (error) {
+      console.log(error.message);
+    }
+
+    // If response has errors, update Error State
+    if (response.errors) {
+      setError(response.errors);
+    }
   };
   return (
     <div>
@@ -71,16 +96,16 @@ const ScheduleTransaction = () => {
       <label>Enter Receiving Account ID:
         <input 
           type="text" 
-          name="receiving_acc" 
-          value={inputs.receiving_acc || ""} 
+          name="ReceivingAccountID" 
+          value={inputs.ReceivingAccountID || ""} 
           onChange={handleChange}
         />
         </label>
       <label>Enter your amount:
         <input 
           type="integer" 
-          name="amount" 
-          value={inputs.amount || ""} 
+          name="TransactionAmount" 
+          value={inputs.TransactionAmount || ""} 
           onChange={handleChange}
         />
         </label>
@@ -88,8 +113,8 @@ const ScheduleTransaction = () => {
         <label>Enter comments:
         <input 
           type="text" 
-          name="comment" 
-          value={inputs.comment || ""} 
+          name="Comment" 
+          value={inputs.Comment || ""} 
           onChange={handleChange}
         />
         </label>
