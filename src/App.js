@@ -20,11 +20,16 @@ import ScheduleTransaction from "./Pages/ScheduleTransaction";
 import SignupPage from "./Pages/SignupPage";
 import LoginPage from "./Pages/LoginPage";
 import TransactionDetails from "./Pages/TransactionDetails";
+import NavBar1 from '../src/Components/NavBars/NavBar1'
+import { UserAuth } from "../src/Context/AuthContext";
+
 
 function App() {
+  const [user, setUser] = UserAuth();
+
   return (
     <Router>
-      {/* <NavBar1 /> */}
+      {user ? <NavBar1 /> : null}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />

@@ -47,7 +47,6 @@ const Home = () => {
 
   return (
     <div>
-      <NavBar1 />
       <Table striped bordered hover>
         <thead>
           <tr>
