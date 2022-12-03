@@ -6,7 +6,8 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import ContactForm from '../Components/Content/contactdetailform'
 import UserDetails from '../Components/Content/UserDetails'
-// const [editForm] = useState(false);
+import { UserAuth } from "../Context/AuthContext";
+
 const mockuserdata =
 {
   "UserID": 1,
@@ -22,14 +23,16 @@ const mockuserdata =
 const Extra = () => {
   const [userData, setUserData] = useState({});
   useEffect(() => {
-    setUserData({ Email: mockuserdata.Email, Address: mockuserdata.Address })
+    setUserData({ Email: user.data[0].Email, Address: user.data[0].Address })
     console.log(userData);
   }, []);
-
+  
   const [editForm, setEditForm] = useState(false);
   const [updatedData, setUpdatedData] = useState({ email: userData.Email, address: userData.Address });
+  const [user, setUser] = UserAuth();
 
-  console.log(editForm)
+  // console.log(editForm)
+  console.log(user)
   const toggleForm = () => {
     setEditForm(current => !current);
   }
