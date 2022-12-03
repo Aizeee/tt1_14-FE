@@ -8,7 +8,7 @@ import ContactForm from '../Components/Content/contactdetailform'
 import UserDetails from '../Components/Content/UserDetails'
 import { UserAuth } from "../Context/AuthContext";
 
-
+``
 const Extra = () => {
   const [user, setUser] = UserAuth();
 
