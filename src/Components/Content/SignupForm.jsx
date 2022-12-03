@@ -64,11 +64,11 @@ const SignupForm = () => {
                 Sign up
               </Button>
             </Col>
-            <Col sm>
+            <Row>
               <Form.Text>
                 Already have an account? <Link to="/login">Login</Link>
               </Form.Text>
-            </Col>
+            </Row>
             <Col sm></Col>
           </Row>
         </Form>

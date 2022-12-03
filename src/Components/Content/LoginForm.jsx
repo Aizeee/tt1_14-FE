@@ -34,9 +34,6 @@ const LoginForm = () => {
                   required
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                <Form.Text className="text-muted">
-                  We'll never share your email with anyone else.
-                </Form.Text>
               </Form.Group>
             </Col>
             <Col sm></Col>
@@ -64,11 +61,11 @@ const LoginForm = () => {
                 Log In
               </Button>
             </Col>
-            <Col sm>
+            <Row>
               <Form.Text>
                 Don't have an account? <Link to="/signup">Sign up</Link>
               </Form.Text>
-            </Col>
+            </Row>
             <Col sm></Col>
           </Row>
         </Form>
