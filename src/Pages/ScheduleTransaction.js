@@ -35,14 +35,17 @@ const ScheduleTransaction = () => {
   // createScheduler(name, configuration, options);   
 
   const [inputs, setInputs] = useState({});
-  // const [value, setValue] = useState<Dayjs | null>(
-  //   dayjs('2014-08-18T21:11:54'));
+  const [time, setTime] = useState(
+    dayjs('2014-08-18T21:11:54'));
 
   const handleChange = (event) => {
+    console.log("event: ", event)
     const name = event.target.name;
     const value = event.target.value;
-    console.log("name", name)
-    console.log("value", value)
+    // console.log("name", name)
+    // console.log("value", value)
+
+    // add the input 
     setInputs(values => ({...values, [name]: value}))
     // setValue(newValue);
   }
@@ -51,6 +54,14 @@ const ScheduleTransaction = () => {
     event.preventDefault();
     console.log(inputs);
   }
+
+  const handleDateChange = (newValue) => {
+    // setTime(newValue);
+    // console.log("this is date value", value.$d)
+    console.log(dayjs(time.$d).format('YYYY-MM-DDTHH:mm:ssZ[Z]'))
+    const name = 'time';
+    setInputs(values => ({...values, [name]: dayjs(time.$d).format('YYYY-MM-DDTHH:mm:ssZ[Z]')}))
+  };
   return (
     <div>
       <NavBar1 />
@@ -82,16 +93,16 @@ const ScheduleTransaction = () => {
           onChange={handleChange}
         />
         </label>
-        <input type="submit" />
+        
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DateTimePicker
               label="Date&Time picker"
-              value={1}
-              onChange={()=>{}}
+              value={time}
+              onChange={handleDateChange}
               renderInput={(params) => <TextField {...params} />}
             />
         </LocalizationProvider>
-
+        <input type="submit" />
       </form>
     </div>
   )
