@@ -19,6 +19,7 @@ import Error from "./Pages/ErrorPage";
 import ScheduleTransaction from "./Pages/ScheduleTransaction";
 import SignupPage from "./Pages/SignupPage";
 import LoginPage from "./Pages/LoginPage";
+import TransactionDetails from "./Pages/TransactionDetails";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path="/extra2" element={<Extra2 />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/transactiondetails" element={<TransactionDetails />} />
         <Route path="/scheduletransaction" element={<ScheduleTransaction />} />
         <Route path="*" element={<Error />} />
       </Routes>
