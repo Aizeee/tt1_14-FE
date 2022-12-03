@@ -4,19 +4,38 @@ import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const LoginForm = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  let response;
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(
-      `submitted email is ${email}, submitted password is: ${password}`
-    );
-  };
 
+    try {
+      const { data: signUpData } = await axios.post(
+        "https://tradewise-demo.herokuapp.com/auth/signup",
+        {
+          username: username,
+          password: password,
+        }
+      );
+      response = signUpData;
+    } catch (error) {
+      console.log(error.message);
+    }
+
+    // If response has errors, update Error State
+    if (response.errors) {
+      setError(response.errors);
+    }
+  };
   return (
     <>
       <Container style={{ paddingTop: "1rem" }}>
@@ -26,13 +45,12 @@ const LoginForm = () => {
             <Col sm></Col>
             <Col sm>
               <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
+                <Form.Label>Username</Form.Label>
                 <Form.Control
-                  type="email"
-                  placeholder="Enter email"
-                  name="email"
+                  placeholder="Enter username"
+                  name="username"
                   required
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setUsername(e.target.value)}
                 />
               </Form.Group>
             </Col>
