@@ -21,38 +21,22 @@ const LoginForm = () => {
     e.preventDefault();
 
     try {
-      const { data: LoginData } = await axios.post(
-        "https://localhost:4001/v1/login",
-        {
-          username: username,
-          password: password,
-        }
-      );
-      response = LoginData;
+      const data = await axios.post("http://localhost:4001/v1/login", {
+        Username: username,
+        Password: password,
+      });
+
+      if (data.data) {
+        response = data.data;
+      }
+      //   ExecutiveDBS
+      // DBSBestBank2022
     } catch (error) {
-      console.log(error.message);
+      setError(error.response.data.error);
     }
-
-    // MOCK DATA - DELETE THIS LATER
-    response = {
-      data: {
-        token: "abc",
-      },
-      error: null,
-    };
-
-    console.log(response);
-
-    // If response has errors, update Error State
-    if (response.error) {
-      setError(response.error);
-    }
-
     // Set User Auth State on successful login/signup
     setUser({
-      data: {
-        token: response.data.token,
-      },
+      data: response.data,
       loading: false,
       error: null,
     });

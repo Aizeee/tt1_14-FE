@@ -20,23 +20,22 @@ export const UserProvider = ({ children }) => {
   }
 
   const fetchUser = async () => {
-    const { data: response } = await axios.get("https://localhost:4000");
-
+    console.log(user);
+    const { data: response } = await axios.post(
+      "http://localhost:4001/v1/getUserByUsername",
+      {
+        Username: "ExecutiveDBS",
+      }
+    );
+    console.log(response);
     // If data exists, update User state, else Error
     if (response.data) {
       setUser({
-        data: null,
+        data: response.data,
         loading: false,
         error: null,
       });
-    } else if (response.data && response.data.errors.length) {
-      setUser({
-        data: null,
-        loading: false,
-        error: response.errors,
-      });
     }
-    console.log("fetch success");
   };
 
   // on page load, if token exists, we run FetchUser. Else, we set user to initial state.
