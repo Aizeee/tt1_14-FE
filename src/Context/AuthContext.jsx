@@ -21,27 +21,8 @@ export const UserProvider = ({ children }) => {
 
   // Function to fetch response from Middleware (If pass we'll get a response to update state)
   const fetchUser = async () => {
-    const { data: response } = await axios.get(
-      "https://tradewise-demo.herokuapp.com/auth/me"
-    );
-
-    // If data exists, update User state, else Error
-    if (response.data && response.data.user) {
-      setUser({
-        data: {
-          id: response.data.user.id,
-          email: response.data.user.email,
-        },
-        loading: false,
-        error: null,
-      });
-    } else if (response.data && response.data.errors.length) {
-      setUser({
-        data: null,
-        loading: false,
-        error: response.errors[0].msg,
-      });
-    }
+    // const { data: response } = await axios.get("https://test.com");
+    console.log("fetch success");
   };
 
   // on page load, if token exists, we run FetchUser. Else, we set user to initial state.

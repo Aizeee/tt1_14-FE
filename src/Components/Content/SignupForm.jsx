@@ -6,11 +6,13 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { UserAuth } from "../../Context/AuthContext";
 
 const SignupForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [user, setUser] = UserAuth();
   const navigate = useNavigate();
 
   let response;
@@ -32,8 +34,8 @@ const SignupForm = () => {
     }
 
     // If response has errors, update Error State
-    if (response.errors) {
-      setError(response.errors);
+    if (response.error) {
+      setError(response.error);
     }
   };
 
