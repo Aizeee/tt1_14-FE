@@ -6,26 +6,42 @@ import Row from "react-bootstrap/Row";
 import axios from "../axiosAuth/api/axios";
 import { useParams } from "react-router-dom";
 import Table from "react-bootstrap/Table";
-
+import { useLocation } from "react-router-dom";
+/* import dayjs, { Dayjs } from "dayjs"; */
 export default function TransactionDetails() {
-  const { id } = useParams();
-  const [allAccountData, setAllAccountData] = useState([]);
-  const [toBeDelete, setToBeDelete] = useState({});
+  const accountIdObj = useLocation();
+  console.log(accountIdObj);
 
-  useEffect(() => {
+  const alyssa = "2022-11-08T04:00:00.000Z";
+
+  const { id } = useParams();
+  const [allAccountData, setAllAccountData] = useState([
+    {
+      TransactionID: 1,
+      AccountID: 621156213,
+      ReceivingAccountID: 339657462,
+      Date: "2022-11-08T04:00:00.000Z",
+      TransactionAmount: 500.0,
+      Comment: "Monthly Pocket Money",
+    },
+  ]);
+  const [toBeDelete, setToBeDelete] = useState({ TransactionID: "" });
+
+  /*  useEffect(() => {
     const fetchApi = async () => {
       try {
-        let response = await axios.get(`/v1/getTransactionsByUserId/${id}`);
+        let response = await axios.get(`/v1/getTransactionsByAccountId/${id}`);
         setAllAccountData(response.data);
       } catch (err) {
         console.log(err);
       }
     };
     fetchApi();
-  }, []);
+  }, []); */
 
   ///////////////////////////////////////////////////////////
-  function handleDelete() {
+  function handleDelete(transactionId) {
+    setToBeDelete({ TransactionID: String(transactionId) });
     const fetchApi = async () => {
       try {
         let response = await axios.delete("/v1/delTransactions", {
@@ -39,53 +55,44 @@ export default function TransactionDetails() {
   ///////////////////////////////////////////////////////////
   const element = allAccountData.map((accountContainer) => (
     <>
-      <tbody>
-        <tr>
-          <td>Account{accountContainer.id}</td>
-          <td>{accountContainer.TransactionID}</td>
-          <td>{accountContainer.AccountID}</td>
-          <td>{accountContainer.Date}</td>
-          <td>{accountContainer.TransactionAmount}</td>
-          <td>{accountContainer.Comment}</td>
+      <tr>
+        <td>Account{accountContainer.id}</td>
+        <td>{accountContainer.TransactionID}</td>
+        <td>{accountContainer.AccountID}</td>
+        <td>{accountContainer.Date}</td>
+        <td>{accountContainer.TransactionAmount}</td>
+        <td>{accountContainer.Comment}</td>
+        <td>
           <Button
             variant="primary"
-            className="exchangeButton"
-            onClick={handleDelete}
+            className="deleteButton"
+            onClick={() => handleDelete(accountContainer.TransactionID)}
           >
             delete
           </Button>
-        </tr>
-      </tbody>
-      {/*  */}
-      {/* <Card style={{ width: "18rem" }}>
-        <Card.Body>
-          <Card.Title>Account{accountContainer.id}</Card.Title>
-
-          <Row>
-            <Button
-              variant="primary"
-              className="exchangeButton"
-              onClick={handleDelete}
-            >
-              delete
-            </Button>
-          </Row>
-        </Card.Body>
-      </Card> */}
+        </td>
+      </tr>
     </>
   ));
 
   return (
     <>
       <h3>John</h3>
-      <div className="allCards">{element}</div>
+      <Link to="/scheduletransaction" state={accountIdObj}>
+        <Button variant="primary" className="createButton">
+          Schedule New Transaction
+        </Button>
+      </Link>
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
+            <th>User id</th>
+            <th>TransactionID</th>
+            <th>AccountID</th>
+            <th>Date</th>
+            <th>Transaction Amount</th>
+            <th>Comment</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>{element}</tbody>
