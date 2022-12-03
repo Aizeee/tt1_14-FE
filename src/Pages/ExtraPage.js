@@ -1,35 +1,33 @@
 import React, { useState, useEffect } from 'react'
-import NavBar1 from '../Components/NavBars/NavBar1'
+// import NavBar1 from '../Components/NavBars/NavBar1'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import ContactForm from '../Components/Content/contactdetailform'
 import UserDetails from '../Components/Content/UserDetails'
-// const [editForm] = useState(false);
-const mockuserdata =
-{
-  "UserID": 1,
-  "Username": "ExecutiveDBS",
-  "Password": "DBSBestBank2022",
-  "Firstname": "Tom",
-  "Lastname": "Lim",
-  "Email": "TomLim@easymail.com",
-  "Address": "Block 123 Serangoon Garden #10-129",
-  "OptIntoPhyStatements": 0
-}
+import { UserAuth } from "../Context/AuthContext";
 
+``
 const Extra = () => {
+  const [user, setUser] = UserAuth();
+
   const [userData, setUserData] = useState({});
+  // useEffect(() => {
+  //   setUserData({ Email: mockuserdata.Email, Address: mockuserdata.Address })
+  //   console.log(userData);
+  // }, []);
   useEffect(() => {
-    setUserData({ Email: mockuserdata.Email, Address: mockuserdata.Address })
+    setUserData({ Email: user.data[0].Email, Address: user.data[0].Address })
     console.log(userData);
   }, []);
-
+  
   const [editForm, setEditForm] = useState(false);
   const [updatedData, setUpdatedData] = useState({ email: userData.Email, address: userData.Address });
 
-  console.log(editForm)
+  // console.log(editForm)
+  // console.log(user.data[1])
+  console.log(user.data[0])
   const toggleForm = () => {
     setEditForm(current => !current);
   }
@@ -40,7 +38,7 @@ const Extra = () => {
 
   return (
     <div>
-      <NavBar1 />
+      {/* <NavBar1 /> */}
 
       <h1>Update Personal and Contact Details</h1>
       <p>Please ensure that the details below are correct and click "Submit" to complete this transaction.</p>
