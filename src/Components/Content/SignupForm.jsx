@@ -5,17 +5,35 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const SignupForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  let response;
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(
-      `submitted email is ${email}, submitted password is: ${password}`
-    );
+    try {
+      const { data: signUpData } = await axios.post(
+        "https://tradewise-demo.herokuapp.com/auth/signup",
+        {
+          email,
+          password,
+        }
+      );
+      response = signUpData;
+    } catch (error) {
+      console.log(error.message);
+    }
+
+    // If response has errors, update Error State
+    if (response.errors.length) {
+      setError(response.errors[0].msg);
+    }
   };
 
   return (
