@@ -10,29 +10,31 @@ import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
+// import View from "react-bootstrap/View";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import {Link, Routes, Route, useNavigate} from 'react-router-dom';
 
 const ScheduleTransaction = () => {
-  const {setDebug, clearScheduler, createScheduler, saturday, sunday} = require('datetime-scheduler');
-  const name = "weekend at 12:15:30.500";
-  const configuration = {
-    "days": {saturday, sunday},
-    "time": {
-        "hours": 12,
-        "minutes": 15,
-        "seconds": 30,
-        "millis": 500
-      }
-  };
+  // const {setDebug, clearScheduler, createScheduler, saturday, sunday} = require('datetime-scheduler');
+  // const name = "weekend at 12:15:30.500";
+  // const configuration = {
+  //   "days": {saturday, sunday},
+  //   "time": {
+  //       "hours": 12,
+  //       "minutes": 15,
+  //       "seconds": 30,
+  //       "millis": 500
+  //     }
+  // };
+  const navigate = useNavigate();
 
-  const options = {
-      asyncTask: async () => {
-          console.log("Doing staff");
-          await new Promise(resolve => setTimeout(resolve, 10000));
-          console.log("Finishing staff");
-      }
-  };
+  // const options = {
+  //     asyncTask: async () => {
+  //         console.log("Doing staff");
+  //         await new Promise(resolve => setTimeout(resolve, 10000));
+  //         console.log("Finishing staff");
+  //     }
+  // };
 
   // setDebug(message => console.log("My logger " + message));
 
@@ -47,21 +49,13 @@ const ScheduleTransaction = () => {
   let response;
 
   const handleChange = (event) => {
-    // console.log("event: ", event)
     const name = event.target.name;
     const value = event.target.value;
     // console.log("name", name)
     // console.log("value", value)
 
-    // add the input 
+    // TODO: add account ID 
     setInputs(values => ({...values, [name]: value}))
-    // setValue(newValue);
-  }
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(inputs);
-    handleTrxSubmit(event);
   }
 
   const handleDateChange = (newValue) => {
@@ -74,7 +68,7 @@ const ScheduleTransaction = () => {
   const handleTrxSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("HANDLE TRX SUBMIT ")
+    console.log("HANDLE TRX SUBMIT:", inputs);
     try {
       const { data: scheduleTransactionData } = await axios.post(
         "http://localhost:4001/v1/addTransactions",
@@ -94,9 +88,9 @@ const ScheduleTransaction = () => {
     <div>
       <NavBar1 />
       <Container style={{ paddingTop: "1rem" }}>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleTrxSubmit}>
           <Row>
-            <Form.Group>
+            <Form.Group className="mb-3">
               <Form.Label>
                 Enter Receiving Account ID:
               </Form.Label>
@@ -108,7 +102,7 @@ const ScheduleTransaction = () => {
             </Form.Group>
           </Row>
           <Row>
-            <Form.Group>
+            <Form.Group className="mb-3">
               <Form.Label>
                 Enter Amount:
               </Form.Label>
@@ -120,7 +114,7 @@ const ScheduleTransaction = () => {
             </Form.Group>
           </Row>
           <Row>
-            <Form.Group>
+            <Form.Group className="mb-3">
               <Form.Label>
                 Enter Comments:
               </Form.Label>
@@ -132,13 +126,13 @@ const ScheduleTransaction = () => {
             </Form.Group>
           </Row>
             <Row>
-            <Form.Group>
+            <Form.Group className="mb-3">
               <Form.Label>
                 Schedule Transaction:
               </Form.Label>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateTimePicker
-                    label="Date&Time picker"
+                    label="Date &Time picker"
                     value={time}
                     onChange={handleDateChange}
                     renderInput={(params) => <TextField {...params} />}
@@ -146,9 +140,15 @@ const ScheduleTransaction = () => {
               </LocalizationProvider>
             </Form.Group>
           </Row>
-          <Button variant="danger" type="submit">
-                Schedule Transaction
-          </Button>
+          <div style={{margin: "0 auto"}}>
+            <Button variant="danger" type="submit" >
+                  Schedule Transaction 
+            </Button>
+            {/* <Button
+              title="Back to Transaction Details"
+              onPress={() => navigation.navigate('TransactionDetails')}
+            /> */}
+          </div>
         </Form>
       </Container>
 
