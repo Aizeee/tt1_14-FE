@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { Link } from "react-router-dom";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -33,9 +34,6 @@ const LoginForm = () => {
                   required
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                <Form.Text className="text-muted">
-                  We'll never share your email with anyone else.
-                </Form.Text>
               </Form.Group>
             </Col>
             <Col sm></Col>
@@ -63,9 +61,11 @@ const LoginForm = () => {
                 Log In
               </Button>
             </Col>
-            <Col sm>
-              <Form.Text>Don't have an account? Sign up</Form.Text>
-            </Col>
+            <Row>
+              <Form.Text>
+                Don't have an account? <Link to="/signup">Sign up</Link>
+              </Form.Text>
+            </Row>
             <Col sm></Col>
           </Row>
         </Form>
