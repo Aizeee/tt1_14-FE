@@ -7,6 +7,11 @@ import TextField from '@mui/material/TextField';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import axios from "axios";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 const ScheduleTransaction = () => {
   const {setDebug, clearScheduler, createScheduler, saturday, sunday} = require('datetime-scheduler');
@@ -60,8 +65,6 @@ const ScheduleTransaction = () => {
   }
 
   const handleDateChange = (newValue) => {
-    // setTime(newValue);
-    // console.log("this is date value", value.$d)
     console.log(dayjs(time.$d).format('YYYY-MM-DDTHH:mm:ssZ[Z]'))
     const name = 'Date';
     setInputs(values => ({...values, [name]: dayjs(time.$d).format('YYYY-MM-DDTHH:mm:ssZ[Z]')}))
@@ -90,45 +93,65 @@ const ScheduleTransaction = () => {
   return (
     <div>
       <NavBar1 />
+      <Container style={{ paddingTop: "1rem" }}>
+        <Form onSubmit={handleSubmit}>
+          <Row>
+            <Form.Group>
+              <Form.Label>
+                Enter Receiving Account ID:
+              </Form.Label>
+              <Form.Control
+                type="text" 
+                name="ReceivingAccountID" 
+                value={inputs.ReceivingAccountID || ""} 
+                onChange={handleChange}/>
+            </Form.Group>
+          </Row>
+          <Row>
+            <Form.Group>
+              <Form.Label>
+                Enter Amount:
+              </Form.Label>
+              <Form.Control
+                type="integer" 
+                name="TransactionAmount" 
+                value={inputs.TransactionAmount || ""} 
+                onChange={handleChange}/>
+            </Form.Group>
+          </Row>
+          <Row>
+            <Form.Group>
+              <Form.Label>
+                Enter Comments:
+              </Form.Label>
+              <Form.Control
+                type="text" 
+                name="Comment" 
+                value={inputs.Comment || ""} 
+                onChange={handleChange}/>
+            </Form.Group>
+          </Row>
+            <Row>
+            <Form.Group>
+              <Form.Label>
+                Schedule Transaction:
+              </Form.Label>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DateTimePicker
+                    label="Date&Time picker"
+                    value={time}
+                    onChange={handleDateChange}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+              </LocalizationProvider>
+            </Form.Group>
+          </Row>
+          <Button variant="danger" type="submit">
+                Schedule Transaction
+          </Button>
+        </Form>
+      </Container>
 
-      <p>Schedule Transaction</p>
-      <form onSubmit={handleSubmit}>
-      <label>Enter Receiving Account ID:
-        <input 
-          type="text" 
-          name="ReceivingAccountID" 
-          value={inputs.ReceivingAccountID || ""} 
-          onChange={handleChange}
-        />
-        </label>
-      <label>Enter your amount:
-        <input 
-          type="integer" 
-          name="TransactionAmount" 
-          value={inputs.TransactionAmount || ""} 
-          onChange={handleChange}
-        />
-        </label>
-
-        <label>Enter comments:
-        <input 
-          type="text" 
-          name="Comment" 
-          value={inputs.Comment || ""} 
-          onChange={handleChange}
-        />
-        </label>
-        
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DateTimePicker
-              label="Date&Time picker"
-              value={time}
-              onChange={handleDateChange}
-              renderInput={(params) => <TextField {...params} />}
-            />
-        </LocalizationProvider>
-        <input type="submit" />
-      </form>
     </div>
   )
 }
