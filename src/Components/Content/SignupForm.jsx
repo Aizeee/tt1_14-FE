@@ -6,11 +6,13 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { UserAuth } from "../../Context/AuthContext";
 
 const SignupForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [user, setUser] = UserAuth();
   const navigate = useNavigate();
 
   let response;
@@ -20,7 +22,7 @@ const SignupForm = () => {
 
     try {
       const { data: signUpData } = await axios.post(
-        "https://tradewise-demo.herokuapp.com/auth/signup",
+        "https://localhost:4001/signup",
         {
           username: username,
           password: password,
@@ -31,16 +33,45 @@ const SignupForm = () => {
       console.log(error.message);
     }
 
+    // MOCK DATA - DELETE THIS LATER
+    response = {
+      data: {
+        token: "abc",
+      },
+      error: null,
+    };
+
     // If response has errors, update Error State
-    if (response.errors) {
-      setError(response.errors);
+    if (response.error) {
+      return setError(response.error);
     }
+
+    // Set User Auth State on successful login/signup
+    // TODO: Update token to response.data.token
+    setUser({
+      data: {
+        token: response.data.token,
+      },
+      loading: false,
+      error: null,
+    });
+
+    // Storing JWT in the browser Local Storage
+    localStorage.setItem("token", response.data.token);
+    // Update axios header with the token, so user is authenticated across all protected routes
+    axios.defaults.headers.common[
+      "authorization"
+    ] = `Bearer ${response.data.token}`;
+
+    // Navigate user on login/signup success
+    navigate("/");
   };
 
   return (
     <>
       <Container style={{ paddingTop: "1rem" }}>
         <h1>DIGI Signup</h1>
+        {error && <div>{error}</div>}
         <Form onSubmit={handleSubmit}>
           <Row>
             <Col sm></Col>

@@ -84,23 +84,23 @@ const Home = () => {
       <Table striped bordered hover>
         <thead>
           <tr>
-            {accountData.length !== 0 ? Object.keys(accountData[0]).map((accountDetailHeader) => {
-              return (<th>
+            {accountData.length !== 0 ? Object.keys(accountData[0]).map((accountDetailHeader, index) => {
+              return (<th key={index}>
                 {accountDetailHeader}
               </th>)
             }) : null}
           </tr>
         </thead>
         <tbody>
-          {accountData.map((account, index) => {
+          {accountData.length !== 0 ? accountData.map((account) => {
             return (
-              <tr onClick={() => handleClick(account.AccountID)}>
-                {Object.values(account).map((accountDetails) => {
-                  return <td>{accountDetails}</td>
+              <tr key={account.accountId} onClick={() => handleClick(account.AccountID)}>
+                {Object.values(account).map((accountDetails, index) => {
+                  return <td key={index}>{accountDetails}</td>
                 })}
               </tr>
             );
-          })}
+          }) : <h1>No Data Available!</h1>}
         </tbody>
       </Table>
     </div>
