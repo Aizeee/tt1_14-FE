@@ -33,6 +33,10 @@ function App() {
         <Route path="/extra2" element={<Extra2 />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route
+          path="/transactionDetails/:accountId"
+          element={<TransactionDetails />}
+        />
         <Route path="/scheduletransaction" element={<ScheduleTransaction />} />
         <Route path="*" element={<Error />} />
       </Routes>
