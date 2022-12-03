@@ -20,16 +20,28 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // TODO: update endpoint
     try {
-      const { data: LoginData } = await axios.post("https://localhost:4001/", {
-        username: username,
-        password: password,
-      });
+      const { data: LoginData } = await axios.post(
+        "https://localhost:4001/v1/login",
+        {
+          username: username,
+          password: password,
+        }
+      );
       response = LoginData;
     } catch (error) {
       console.log(error.message);
     }
+
+    // MOCK DATA - DELETE THIS LATER
+    response = {
+      data: {
+        token: "abc",
+      },
+      error: null,
+    };
+
+    console.log(response);
 
     // If response has errors, update Error State
     if (response.error) {
@@ -39,7 +51,7 @@ const LoginForm = () => {
     // Set User Auth State on successful login/signup
     setUser({
       data: {
-        token: "token",
+        token: response.data.token,
       },
       loading: false,
       error: null,
@@ -60,6 +72,7 @@ const LoginForm = () => {
     <>
       <Container style={{ paddingTop: "1rem" }}>
         <h1>DIGI Login</h1>
+        {error && <div>{error}</div>}
         <Form onSubmit={handleSubmit}>
           <Row>
             <Col sm></Col>

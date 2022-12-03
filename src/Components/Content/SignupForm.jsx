@@ -20,26 +20,37 @@ const SignupForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // TODO: update endpoint
     try {
-      const { data: signUpData } = await axios.post("https://localhost:4001/", {
-        username: username,
-        password: password,
-      });
+      const { data: signUpData } = await axios.post(
+        "https://localhost:4001/signup",
+        {
+          username: username,
+          password: password,
+        }
+      );
       response = signUpData;
     } catch (error) {
       console.log(error.message);
     }
 
+    // MOCK DATA - DELETE THIS LATER
+    response = {
+      data: {
+        token: "abc",
+      },
+      error: null,
+    };
+
     // If response has errors, update Error State
     if (response.error) {
-      setError(response.error);
+      return setError(response.error);
     }
 
     // Set User Auth State on successful login/signup
+    // TODO: Update token to response.data.token
     setUser({
       data: {
-        token: "token",
+        token: response.data.token,
       },
       loading: false,
       error: null,
