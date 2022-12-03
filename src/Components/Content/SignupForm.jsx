@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { Link } from "react-router-dom";
 
 const SignupForm = () => {
   const [email, setEmail] = useState("");
@@ -64,7 +65,9 @@ const SignupForm = () => {
               </Button>
             </Col>
             <Col sm>
-              <Form.Text>Already have an account? Login</Form.Text>
+              <Form.Text>
+                Already have an account? <Link to="/login">Login</Link>
+              </Form.Text>
             </Col>
             <Col sm></Col>
           </Row>
