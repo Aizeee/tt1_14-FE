@@ -1,14 +1,20 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import NavBar1 from '../Components/NavBars/NavBar1'
-// import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
-import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
+import AddressForm from '../Components/Content/addressForm'
+// import CountrySelect from 'react-bootstrap-country-select';
 
 // const [checked, setChecked] = useState(false);
 
 const Extra = () => {
+
+  // const handleClick = (accountId) => {
+  //   } }
+
+  // }
+  
   return (
     <div>
       <NavBar1 />
@@ -21,107 +27,18 @@ const Extra = () => {
       <h3>My Residential Address</h3>
       <p> </p>
       <p> </p>
-        <Row>
-        <Col>
-          <Form.Label>Postal Code</Form.Label>
-        </Col>
-        <Col>
-          <Form.Control placeholder="" />
-        </Col>
-        </Row>
-        <Row>
-          <p></p>
-        </Row>
-        <Row>
-        <Col>
-          <Form.Label>Block No.</Form.Label>
-        </Col>
-        <Col>
-          <Form.Control placeholder="" />
-        </Col>
-        </Row>
-        <Row>
-          <p></p>
-        </Row>
-        <Row>
-        <Col>
-          <Form.Label>Unit No.</Form.Label>
-        </Col>
-        <Col>
-          <Form.Control placeholder="" />
-        </Col>
-        <Col>
-          <Form.Label>-</Form.Label>
-        </Col>
-        <Col>
-          <Form.Control placeholder="" />
-        </Col>
-        </Row>
-        <Row>
-          <p></p>
-        </Row>
-        <Row>
-        <Col>
-          <Form.Label>Street Name</Form.Label>
-        </Col>
-        <Col>
-          <Form.Control placeholder="" />
-        </Col>
-        </Row>
+      <AddressForm/>
+       
         {/* country --> drop down; postal code */}
         <h3>My Mailing Address</h3>
       <p> </p>
-      <Form.Group className="mb-3" id="formGridCheckbox">
-        <Form.Check type="checkbox" label="My Mailing Address is the same as my residential address" />
+      <Row>
+
+      </Row>
+      <Form.Group className="mb-3" id="formGridCheckbox" >
+        <Form.Check type="checkbox" label="My Mailing Address is the same as my residential address" defaultChecked = {false}/>
       </Form.Group>
-      <p> </p>
-        <Row>
-        <Col>
-          <Form.Label>Postal Code</Form.Label>
-        </Col>
-        <Col>
-          <Form.Control placeholder="" />
-        </Col>
-        </Row>
-        <Row>
-          <p></p>
-        </Row>
-        <Row>
-        <Col>
-          <Form.Label>Block No.</Form.Label>
-        </Col>
-        <Col>
-          <Form.Control placeholder="" />
-        </Col>
-        </Row>
-        <Row>
-          <p></p>
-        </Row>
-        <Row>
-        <Col>
-          <Form.Label>Unit No.</Form.Label>
-        </Col>
-        <Col>
-          <Form.Control placeholder="" />
-        </Col>
-        <Col>
-          <Form.Label>-</Form.Label>
-        </Col>
-        <Col>
-          <Form.Control placeholder="" />
-        </Col>
-        </Row>
-        <Row>
-          <p></p>
-        </Row>
-        <Row>
-        <Col>
-          <Form.Label>Street Name</Form.Label>
-        </Col>
-        <Col>
-          <Form.Control placeholder="" />
-        </Col>
-        </Row>
+      <AddressForm/>
     
       <Button variant="primary" type="submit">
         Save
