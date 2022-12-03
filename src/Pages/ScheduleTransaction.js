@@ -144,10 +144,10 @@ const ScheduleTransaction = () => {
             <Button variant="danger" type="submit" >
                   Schedule Transaction 
             </Button>
-            {/* <Button
+            <Button
               title="Back to Transaction Details"
-              onPress={() => navigation.navigate('TransactionDetails')}
-            /> */}
+              onClick={() => navigate(-1)}
+            />
           </div>
         </Form>
       </Container>
