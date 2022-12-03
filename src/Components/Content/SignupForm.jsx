@@ -22,7 +22,7 @@ const SignupForm = () => {
 
     try {
       const { data: signUpData } = await axios.post(
-        "http://localhost:4001/v1/addUser",
+        "http://13.112.160.104:4001/v1/addUser",
         {
           username: username,
           password: password,
