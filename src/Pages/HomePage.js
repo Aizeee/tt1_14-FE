@@ -73,9 +73,25 @@ const Home = () => {
   }
   const [accountData, setAccountData] = useState([])
 
+  const fetchApi = async (userId) => {
+    try {
+      const data = await fetch(`http://localhost:4001/v1/getBankAccountsByUserId/${userId}`)
+      const dataJson = await data.json();
+      setAccountData(dataJson.map((field) => {
+        delete field['_id']
+        return field
+      }))
+    } catch (error) {
+      console.log("error")
+      setAccountData([]);
+    }
+
+  }
+
   useEffect(() => {
     //fetch api
-    setAccountData(bankAccountMockArray)
+    // needs to get the user ID from useContext Provider
+    fetchApi(1);
   }, [accountData]);
 
   return (
