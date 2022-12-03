@@ -22,7 +22,7 @@ export const UserProvider = ({ children }) => {
   const fetchUser = async () => {
     console.log(user);
     const { data: response } = await axios.post(
-      "http://localhost:4001/v1/getUserByUsername",
+      "http://13.112.160.104:4001/v1/getUserByUsername",
       {
         Username: "ExecutiveDBS",
       }
