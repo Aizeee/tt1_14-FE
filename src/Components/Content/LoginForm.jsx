@@ -60,6 +60,7 @@ const LoginForm = () => {
     <>
       <Container style={{ paddingTop: "1rem" }}>
         <h1>DIGI Login</h1>
+        {error && <div>{error}</div>}
         <Form onSubmit={handleSubmit}>
           <Row>
             <Col sm></Col>
