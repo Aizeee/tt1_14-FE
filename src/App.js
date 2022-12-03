@@ -29,7 +29,7 @@ function App() {
 
   return (
     <Router>
-      {user ? <NavBar1 /> : null}
+      {user.data ? <NavBar1 /> : null}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
