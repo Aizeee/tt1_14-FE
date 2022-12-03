@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const SignupForm = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -17,12 +17,13 @@ const SignupForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       const { data: signUpData } = await axios.post(
         "https://tradewise-demo.herokuapp.com/auth/signup",
         {
-          email,
-          password,
+          username: username,
+          password: password,
         }
       );
       response = signUpData;
@@ -31,8 +32,8 @@ const SignupForm = () => {
     }
 
     // If response has errors, update Error State
-    if (response.errors.length) {
-      setError(response.errors[0].msg);
+    if (response.errors) {
+      setError(response.errors);
     }
   };
 
@@ -45,13 +46,12 @@ const SignupForm = () => {
             <Col sm></Col>
             <Col sm>
               <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
+                <Form.Label>Username</Form.Label>
                 <Form.Control
-                  type="email"
-                  placeholder="Enter email"
-                  name="email"
+                  placeholder="Enter username"
+                  name="username"
                   required
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setUsername(e.target.value)}
                 />
                 <Form.Text className="text-muted">
                   We'll never share your email with anyone else.
