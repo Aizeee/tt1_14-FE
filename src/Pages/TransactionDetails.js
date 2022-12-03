@@ -70,7 +70,7 @@ export default function TransactionDetails() {
 
   return (
     <>
-      <h3>{accountIdObj.accountId}</h3>
+      <h3>Account no.{accountIdObj.accountId}</h3>
       <Link to="/scheduletransaction" state={accountIdObj}>
         <Button variant="primary" className="createButton">
           Schedule New Transaction
