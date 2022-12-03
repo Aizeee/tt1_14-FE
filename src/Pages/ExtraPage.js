@@ -8,17 +8,6 @@ import ContactForm from '../Components/Content/contactdetailform'
 import UserDetails from '../Components/Content/UserDetails'
 import { UserAuth } from "../Context/AuthContext";
 
-// const mockuserdata =
-// {
-//   "UserID": 1,
-//   "Username": "ExecutiveDBS",
-//   "Password": "DBSBestBank2022",
-//   "Firstname": "Tom",
-//   "Lastname": "Lim",
-//   "Email": "TomLim@easymail.com",
-//   "Address": "Block 123 Serangoon Garden #10-129",
-//   "OptIntoPhyStatements": 0
-// }
 
 const Extra = () => {
   const [user, setUser] = UserAuth();
