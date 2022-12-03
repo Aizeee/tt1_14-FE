@@ -13,7 +13,7 @@ const Home = () => {
 
   const handleClick = (accountId) => {
     // change navigation link to transaction details page
-    navigate("/about", { state: { accountId: accountId } })
+    navigate("/transactiondetails", { state: { accountId: accountId } })
 
     // how to use it on the other page
     /*

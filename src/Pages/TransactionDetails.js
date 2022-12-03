@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-import Row from "react-bootstrap/Row";
-import axios from "../axiosAuth/api/axios";
+// <<<<<<< Updated upstream
+// import Card from "react-bootstrap/Card";
+// import Row from "react-bootstrap/Row";
+// import axios from "../axiosAuth/api/axios";
+// =======
+import axios from "axios";
+// >>>>>>> Stashed changes
 import { useParams } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import { useLocation } from "react-router-dom";
@@ -14,23 +18,14 @@ export default function TransactionDetails() {
 
   const alyssa = "2022-11-08T04:00:00.000Z";
 
-  const { id } = useParams();
-  const [allAccountData, setAllAccountData] = useState([
-    {
-      TransactionID: 1,
-      AccountID: 621156213,
-      ReceivingAccountID: 339657462,
-      Date: "2022-11-08T04:00:00.000Z",
-      TransactionAmount: 500.0,
-      Comment: "Monthly Pocket Money",
-    },
-  ]);
+
+  const [allAccountData, setAllAccountData] = useState([]);
   const [toBeDelete, setToBeDelete] = useState({ TransactionID: "" });
 
   /*  useEffect(() => {
     const fetchApi = async () => {
       try {
-        let response = await axios.get(`/v1/getTransactionsByAccountId/${id}`);
+        let response = await axios.get(`http://13.112.160.104:4001/v1/getTransactionsByAccountId/${accountIdObj.accountId}`);
         setAllAccountData(response.data);
       } catch (err) {
         console.log(err);
