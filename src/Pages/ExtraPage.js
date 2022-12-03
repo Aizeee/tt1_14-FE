@@ -40,7 +40,6 @@ const Extra = () => {
 
   return (
     <div>
-      <NavBar1 />
 
       <h1>Update Personal and Contact Details</h1>
       <p>Please ensure that the details below are correct and click "Submit" to complete this transaction.</p>
