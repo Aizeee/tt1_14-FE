@@ -20,7 +20,7 @@ const ContactForm = (props) => {
           <Form.Label>Your Email Address</Form.Label>
         </Col>
         <Col>
-          <Form.Control placeholder={props.userData.Email} />
+          <Form.Control placeholder={props.userData.Email} onChange={(e) => props.setUserData({ ...props.userData, Email: e.target.value })} />
         </Col>
       </Row>
       <Row>
@@ -31,7 +31,7 @@ const ContactForm = (props) => {
           <Form.Label>Address</Form.Label>
         </Col>
         <Col>
-          <Form.Control placeholder={props.userData.Address} />
+          <Form.Control placeholder={props.userData.Address} onChange={(e) => props.setUserData({ ...props.userData, Address: e.target.value })} />
         </Col>
       </Row>
     </Container>
