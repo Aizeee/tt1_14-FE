@@ -8,20 +8,26 @@ import ContactForm from '../Components/Content/contactdetailform'
 import UserDetails from '../Components/Content/UserDetails'
 import { UserAuth } from "../Context/AuthContext";
 
-const mockuserdata =
-{
-  "UserID": 1,
-  "Username": "ExecutiveDBS",
-  "Password": "DBSBestBank2022",
-  "Firstname": "Tom",
-  "Lastname": "Lim",
-  "Email": "TomLim@easymail.com",
-  "Address": "Block 123 Serangoon Garden #10-129",
-  "OptIntoPhyStatements": 0
-}
+// const mockuserdata =
+// {
+//   "UserID": 1,
+//   "Username": "ExecutiveDBS",
+//   "Password": "DBSBestBank2022",
+//   "Firstname": "Tom",
+//   "Lastname": "Lim",
+//   "Email": "TomLim@easymail.com",
+//   "Address": "Block 123 Serangoon Garden #10-129",
+//   "OptIntoPhyStatements": 0
+// }
 
 const Extra = () => {
+  const [user, setUser] = UserAuth();
+
   const [userData, setUserData] = useState({});
+  // useEffect(() => {
+  //   setUserData({ Email: mockuserdata.Email, Address: mockuserdata.Address })
+  //   console.log(userData);
+  // }, []);
   useEffect(() => {
     setUserData({ Email: user.data[0].Email, Address: user.data[0].Address })
     console.log(userData);
@@ -29,10 +35,10 @@ const Extra = () => {
   
   const [editForm, setEditForm] = useState(false);
   const [updatedData, setUpdatedData] = useState({ email: userData.Email, address: userData.Address });
-  const [user, setUser] = UserAuth();
 
   // console.log(editForm)
-  console.log(user)
+  // console.log(user.data[1])
+  console.log(user.data[0])
   const toggleForm = () => {
     setEditForm(current => !current);
   }
