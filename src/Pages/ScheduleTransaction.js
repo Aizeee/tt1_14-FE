@@ -145,8 +145,9 @@ const ScheduleTransaction = () => {
             </Button>
             <Button
               title="Back to Transaction Details"
-              onClick={() => navigate(-1)}
-            />
+              onClick={() => navigate(-1)}>
+                Back
+                </Button>
           </div>
         </Form>
       </Container>
