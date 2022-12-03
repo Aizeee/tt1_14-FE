@@ -6,11 +6,13 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { UserAuth } from "../../Context/AuthContext";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [user, setUser] = UserAuth();
   const navigate = useNavigate();
 
   let response;
@@ -18,24 +20,42 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // TODO: update endpoint
     try {
-      const { data: signUpData } = await axios.post(
-        "https://tradewise-demo.herokuapp.com/auth/signup",
-        {
-          username: username,
-          password: password,
-        }
-      );
-      response = signUpData;
+      const { data: LoginData } = await axios.post("https://localhost:4001/", {
+        username: username,
+        password: password,
+      });
+      response = LoginData;
     } catch (error) {
       console.log(error.message);
     }
 
     // If response has errors, update Error State
-    if (response.errors) {
-      setError(response.errors);
+    if (response.error) {
+      setError(response.error);
     }
+
+    // Set User Auth State on successful login/signup
+    setUser({
+      data: {
+        token: "token",
+      },
+      loading: false,
+      error: null,
+    });
+
+    // Storing JWT in the browser Local Storage
+    localStorage.setItem("token", response.data.token);
+    // Update axios header with the token, so user is authenticated across all protected routes
+    axios.defaults.headers.common[
+      "authorization"
+    ] = `Bearer ${response.data.token}`;
+
+    // Navigate user on login success
+    navigate("/");
   };
+
   return (
     <>
       <Container style={{ paddingTop: "1rem" }}>

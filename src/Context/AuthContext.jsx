@@ -19,9 +19,23 @@ export const UserProvider = ({ children }) => {
     axios.defaults.headers.common["authorization"] = `Bearer ${token}`;
   }
 
-  // Function to fetch response from Middleware (If pass we'll get a response to update state)
   const fetchUser = async () => {
-    // const { data: response } = await axios.get("https://test.com");
+    const { data: response } = await axios.get("https://localhost:4000");
+
+    // If data exists, update User state, else Error
+    if (response.data) {
+      setUser({
+        data: null,
+        loading: false,
+        error: null,
+      });
+    } else if (response.data && response.data.errors.length) {
+      setUser({
+        data: null,
+        loading: false,
+        error: response.errors,
+      });
+    }
     console.log("fetch success");
   };
 

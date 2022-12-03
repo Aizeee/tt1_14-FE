@@ -20,14 +20,12 @@ const SignupForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // TODO: update endpoint
     try {
-      const { data: signUpData } = await axios.post(
-        "https://tradewise-demo.herokuapp.com/auth/signup",
-        {
-          username: username,
-          password: password,
-        }
-      );
+      const { data: signUpData } = await axios.post("https://localhost:4001/", {
+        username: username,
+        password: password,
+      });
       response = signUpData;
     } catch (error) {
       console.log(error.message);
