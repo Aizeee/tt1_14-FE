@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
+import axios from "../axiosAuth/api/axios";
 
 export default function TransactionDetails() {
   const [allAccountData, setAllAccountData] = useState([]);
   useEffect(() => {
     const fetchApi = async () => {
       try {
-        let response = await api.get("");
+        let response = await axios.get("http://localhost:3600/transactions");
         setAllAccountData(response.data);
       } catch (err) {
         console.log(err);
@@ -18,6 +19,10 @@ export default function TransactionDetails() {
     fetchApi();
   }, []);
 
+  ///////////////////////////////////////////////////////////
+  function handleDelete() {
+    console.log("deleted");
+  }
   ///////////////////////////////////////////////////////////
   const element = allAccountData.map((accountContainer) => (
     <>
