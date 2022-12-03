@@ -36,7 +36,7 @@ export default function TransactionDetails() {
     setToBeDelete({ TransactionID: String(transactionId) });
     const fetchApi = async () => {
       try {
-        let response = await axios.delete("`http://13.112.160.104:4001/v1/delTransactions", {
+        let response = await axios.delete("http://13.112.160.104:4001/v1/delTransactions", {
           data: { toBeDelete },
         });
       } catch (err) {
