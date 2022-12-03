@@ -1,33 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-import Row from "react-bootstrap/Row";
 import axios from "../axiosAuth/api/axios";
 import { useParams } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import { useLocation } from "react-router-dom";
-/* import dayjs, { Dayjs } from "dayjs"; */
+import dayjs from "dayjs";
 export default function TransactionDetails() {
-  const accountIdObj = useLocation();
+  const accountIdObj = useLocation().state;
   console.log(accountIdObj);
-
-  const alyssa = "2022-11-08T04:00:00.000Z";
+  let accountsForThisUser = [];
 
   const { id } = useParams();
-  const [allAccountData, setAllAccountData] = useState([
-    {
-      TransactionID: 1,
-      AccountID: 621156213,
-      ReceivingAccountID: 339657462,
-      Date: "2022-11-08T04:00:00.000Z",
-      TransactionAmount: 500.0,
-      Comment: "Monthly Pocket Money",
-    },
-  ]);
+  const [allAccountData, setAllAccountData] = useState([]);
   const [toBeDelete, setToBeDelete] = useState({ TransactionID: "" });
 
-  /*  useEffect(() => {
+  useEffect(() => {
     const fetchApi = async () => {
       try {
         let response = await axios.get(`/v1/getTransactionsByAccountId/${id}`);
@@ -37,7 +25,12 @@ export default function TransactionDetails() {
       }
     };
     fetchApi();
-  }, []); */
+    accountsForThisUser = allAccountData.filter((accountObj) => {
+      if (accountObj.Transactions.AccountID == accountIdObj.accountId) {
+        return accountObj;
+      }
+    });
+  }, []);
 
   ///////////////////////////////////////////////////////////
   function handleDelete(transactionId) {
@@ -51,24 +44,25 @@ export default function TransactionDetails() {
         console.log(err);
       }
     };
+    fetchApi();
   }
   ///////////////////////////////////////////////////////////
-  const element = allAccountData.map((accountContainer) => (
+  const element = accountsForThisUser.map((accountContainer) => (
     <>
       <tr>
-        <td>Account{accountContainer.id}</td>
-        <td>{accountContainer.TransactionID}</td>
-        <td>{accountContainer.AccountID}</td>
-        <td>{accountContainer.Date}</td>
-        <td>{accountContainer.TransactionAmount}</td>
-        <td>{accountContainer.Comment}</td>
+        <td>{accountContainer.Transactions.TransactionID}</td>
+        <td>{accountContainer.Transactions.ReceivingAccountID}</td>
+        <td>{dayjs().format(accountContainer.Transactions.Date)}</td>
+        <td>{accountContainer.Transactions.TransactionAmount}</td>
+        <td>{accountContainer.Transactions.Comment}</td>
+
         <td>
           <Button
-            variant="primary"
+            variant="danger"
             className="deleteButton"
             onClick={() => handleDelete(accountContainer.TransactionID)}
           >
-            delete
+            Delete
           </Button>
         </td>
       </tr>
@@ -77,7 +71,7 @@ export default function TransactionDetails() {
 
   return (
     <>
-      <h3>John</h3>
+      <h3>{accountIdObj.accountId}</h3>
       <Link to="/scheduletransaction" state={accountIdObj}>
         <Button variant="primary" className="createButton">
           Schedule New Transaction
@@ -86,9 +80,8 @@ export default function TransactionDetails() {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>User id</th>
-            <th>TransactionID</th>
-            <th>AccountID</th>
+            <th>Transaction ID</th>
+            <th>Receiving Acct ID</th>
             <th>Date</th>
             <th>Transaction Amount</th>
             <th>Comment</th>
