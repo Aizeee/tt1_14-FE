@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
-import axios from "../axiosAuth/api/axios";
-import { useParams } from "react-router-dom";
+import axios from "axios";
+
 import Table from "react-bootstrap/Table";
 import { useLocation } from "react-router-dom";
 import dayjs from "dayjs";
@@ -11,8 +11,6 @@ export default function TransactionDetails() {
   const accountIdObj = useLocation().state;
   console.log(accountIdObj);
   let accountsForThisUser = [];
-
-  const { id } = useParams();
   const [allAccountData, setAllAccountData] = useState([]);
   const [toBeDelete, setToBeDelete] = useState({ TransactionID: "" });
 
@@ -38,7 +36,7 @@ export default function TransactionDetails() {
     setToBeDelete({ TransactionID: String(transactionId) });
     const fetchApi = async () => {
       try {
-        let response = await axios.delete("/v1/delTransactions", {
+        let response = await axios.delete("`http://13.112.160.104:4001/v1/delTransactions", {
           data: { toBeDelete },
         });
       } catch (err) {
