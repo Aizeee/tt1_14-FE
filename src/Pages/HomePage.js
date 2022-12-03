@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from "react-router-dom";
+
 import NavBar1 from '../Components/NavBars/NavBar1'
 import Table from 'react-bootstrap/Table';
+
 
 const bankAccountMockArray = [
   {
@@ -55,8 +58,13 @@ const bankAccountMockArray = [
 
 const Home = () => {
 
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/about")
+  }
   const [accountData, setAccountData] = useState([])
-  
+
   useEffect(() => {
     //fetch api
     setAccountData(bankAccountMockArray)
@@ -68,20 +76,22 @@ const Home = () => {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>User ID</th>
-            <th>Account ID</th>
-            <th>Account Type</th>
-            <th>Acccount Balance</th>
+            {accountData.length !== 0 ? Object.keys(accountData[0]).map((accountDetailHeader) => {
+              return (<th>
+                {accountDetailHeader}
+              </th>)
+            }) : null}
           </tr>
         </thead>
         <tbody>
           {accountData.map((account, index) => {
-            return (<tr>
-              <td>{account.UserID}</td>
-              <td>{account.AccountID}</td>
-              <td>{account.AccountType}</td>
-              <td>{account.AcccountBalance}</td>
-            </tr>);
+            return (
+              <tr onClick={() => handleClick()}>
+                {Object.values(account).map((accountDetails) => {
+                  return <td>{accountDetails}</td>
+                })}
+              </tr>
+            );
           })}
 
 
